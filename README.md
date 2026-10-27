@@ -142,4 +142,3 @@ Application configurations are specified in `src/main/resources/application.prop
 
   Configure your database credentials inside `src/main/resources/application-sqlserver.properties`.
 
-## License
