@@ -1,5 +1,5 @@
 # Online Examination System
-
+It is my 4-years project in UCSPyay.
 A full-featured Web-based Online Examination System built with Java, Spring Boot, Spring Security, Spring Data JPA, and Thymeleaf. This platform allows administrators to manage exams, questions, and users while providing students with an interactive examination environment and immediate performance reviews.
 
 ## Features
@@ -73,15 +73,7 @@ online-exam-system-master/
 
 ```
 
-## Screenshots
 
-| Admin Dashboard | Manage Exams | 
-| ----- | ----- | 
-|  |  | 
-
-| Manage Questions | Student Exam Interface | 
-| ----- | ----- | 
-|  |  | 
 
 ## Getting Started
 
