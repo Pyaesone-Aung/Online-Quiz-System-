@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <style>
+        body {
+            padding-top: 70px !important;
+        }
+        .custom-fixed-navbar {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            width: 100% !important;
+            z-index: 1050 !important;
+            background: rgba(15, 23, 42, 0.92) !important;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            padding: 13px 0;
+        }
+        .custom-fixed-navbar .navbar-brand {
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: #ffffff !important;
+            letter-spacing: -0.01em;
+        }
+        .custom-fixed-navbar .nav-link {
+            color: #e2e8f0 !important;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            padding: 6px 14px !important;
+            border-radius: 8px;
+        }
+        .custom-fixed-navbar .nav-link:hover {
+            color: #ffffff !important;
+            background: rgba(255, 255, 255, 0.12);
+        }
+        .navbar-profile-pic {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 8px;
+            border: 1.5px solid rgba(255, 255, 255, 0.3);
+        }
+    </style>
+</head>
+<body>
+
+<!-- th:fragment="navbar" defines a reusable fragment -->
+<nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-light custom-fixed-navbar">
+    <style>
+        body {
+            padding-top: 78px !important;
+        }
+        .custom-fixed-navbar {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            width: 100% !important;
+            z-index: 1050 !important;
+            background: rgba(255, 255, 255, 0.96) !important;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid #E7E9EB;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+            padding: 16px 0;
+        }
+        .custom-fixed-navbar .navbar-brand {
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: #282A35 !important;
+            letter-spacing: -0.01em;
+        }
+        .custom-fixed-navbar .nav-link {
+            color: #282A35 !important;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            padding: 8px 16px !important;
+            border-radius: 8px;
+        }
+        .custom-fixed-navbar .nav-link:hover {
+            color: #04AA6D !important;
+            background: #E7E9EB;
+        }
+        .btn-nav-green {
+            background-color: #04AA6D !important;
+            color: #ffffff !important;
+            font-weight: 600 !important;
+            border-radius: 25px !important;
+            padding: 8px 22px !important;
+            margin-left: 8px;
+            transition: all 0.2s ease !important;
+            box-shadow: 0 2px 8px rgba(4, 170, 109, 0.25);
+        }
+        .btn-nav-green:hover {
+            background-color: #038c5a !important;
+            color: #ffffff !important;
+            box-shadow: 0 4px 12px rgba(4, 170, 109, 0.35);
+        }
+        .navbar-profile-pic {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 8px;
+            border: 1.5px solid #04AA6D;
+        }
+    </style>
+    <div class="container-fluid px-4">
+        <a class="navbar-brand" th:href="@{/}">Online Exam System</a>
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/}">Home</a>
+                </li>
+
+                <!-- Admin Links -->
+                <li class="nav-item" sec:authorize="hasRole('ADMIN')">
+                    <a class="nav-link" th:href="@{/admin/dashboard}">Manage Exams</a>
+                </li>
+                <li class="nav-item" sec:authorize="hasRole('ADMIN')">
+                    <a class="nav-link" th:href="@{/admin/students}">Manage Students</a>
+                </li>
+
+                <!-- Student Links -->
+                <li class="nav-item" sec:authorize="hasRole('STUDENT')">
+                    <a class="nav-link" th:href="@{/student/dashboard}">Dashboard</a>
+                </li>
+                <li class="nav-item" sec:authorize="hasRole('STUDENT')">
+                    <a class="nav-link" th:href="@{/student/my-results}">My Results</a>
+                </li>
+            </ul>
+
+            <!-- Login/Register/Logout Links -->
+            <ul class="navbar-nav ms-auto align-items-center">
+                <li class="nav-item" sec:authorize="!isAuthenticated()">
+                    <a class="nav-link btn-nav-green" th:href="@{/login}">Login</a>
+                </li>
+                <li class="nav-item" sec:authorize="!isAuthenticated()">
+                    <a class="nav-link btn-nav-green" th:href="@{/register}">Create Account</a>
+                </li>
+
+                <!-- If user is authenticated -->
+                <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
+                    <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <!-- 1. If user has a profile pic -->
+                        <img th:if="${globalProfilePicUrl != null}"
+                             th:src="@{${globalProfilePicUrl}}"
+                             alt="Profile"
+                             class="navbar-profile-pic">
+
+                        <!-- 2. If user does NOT have a pic, show a default icon -->
+                        <svg th:if="${globalProfilePicUrl == null}"
+                             xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                             class="bi bi-person-circle navbar-profile-pic" viewBox="0 0 16 16"
+                             style="background-color: white;">
+                            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                            <path fill-rule="evenodd"
+                                  d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                        </svg>
+
+                        <span sec:authentication="name"></span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end bg-white border-0 shadow-lg" aria-labelledby="navbarDropdown">
+                        <li>
+                            <a class="dropdown-item text-dark fw-medium" href="javascript:document.getElementById('logoutForm').submit();">Logout</a>
+                            <form th:action="@{/logout}" method="post" id="logoutForm" class="d-none"></form>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
